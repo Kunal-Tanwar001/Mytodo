@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+ <item android:id="@+id/plus" app:showAsAction="always" android:title="+" />
+
+ <item android:id="@+id/Filter" android:title="Sort By:">
+  <menu>
+   <item android:id="@+id/time" android:title="time"/>
+
+   <item android:id="@+id/aplahbet" android:title="alphabet"/>
+
+
+  </menu>
+ </item>
+
+
+
+
+</menu>

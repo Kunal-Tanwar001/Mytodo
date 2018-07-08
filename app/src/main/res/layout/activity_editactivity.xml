@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ADDactivity"
+    android:background="@drawable/ironkkkk">
+
+    <EditText
+        android:id="@+id/tittle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="51dp"
+        android:gravity="center_horizontal"
+        android:hint="Enter the Tittle"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"/>
+
+    <EditText
+        android:id="@+id/discription"
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:gravity="center_horizontal"
+        android:textSize="45dp"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="122dp"
+        android:hint="Discription" />
+
+    <EditText
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="249dp"
+        android:hint="Enter the Date"
+        android:textSize="24dp"/>
+
+    <EditText
+        android:id="@+id/time"
+        android:layout_width="343dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="190dp"
+        android:hint="Enter the Time"
+        android:textSize="23dp"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="112dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:onClick="addbutton"
+        android:text="Edit"
+        android:textColor="@color/colorPrimary" />
+</RelativeLayout>
