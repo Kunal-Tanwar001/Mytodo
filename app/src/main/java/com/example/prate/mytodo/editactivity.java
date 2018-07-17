@@ -54,7 +54,7 @@ long id;
         String discriptio = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_discription));
         String tim = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_time));
         String dat = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_date));
-
+       cursor.close();
         tittle.setText(tiitl);
         discription.setText(discriptio);
         time.setText(tim);
@@ -114,7 +114,9 @@ long id;
             long id1=db.update(databasenames.Expense.table_name,contentValues,databasenames.Expense.col_id+" = ?",colum);
 
              Intent intent=new Intent();
-             intent.putExtra("ff",id1);
+             Bundle b=new Bundle();
+           b.putLong("ff",id1);
+           intent.putExtras(b);
             setResult(4,intent);
             finish();
 

@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class Expensedatabase extends SQLiteOpenHelper {
-    public final static String database_name="Table name";
+    public final static String database_name="name";
     public static final int version=1;
 
     private static   Expensedatabase datanew ;
@@ -22,13 +22,17 @@ return datanew;
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String expensesSql = "CREATE TABLE " + databasenames.Expense.table_name + " ( " +
-                databasenames.Expense.col_id + " INTEGER PRIMARY KEY , " +
-                databasenames.Expense.col_titlle  + " TEXT , " +databasenames.Expense.col_time+" TEXT , " + databasenames.Expense.col_discription +" TEXT ,"+
-                databasenames.Expense.col_date + " TEXT ) ;";
 
+//        String expensesSql = "CREATE TABLE "+ databasenames.Expense.table_name +" ( " +
+//                databasenames.Expense.col_id + " INTEGER PRIMARY KEY , " +
+//                databasenames.Expense.col_titlle  + " TEXT , " +databasenames.Expense.col_time+" TEXT , " + databasenames.Expense.col_discription +" TEXT ,"+
+//                databasenames.Expense.col_date + " TEXT );";
 
-        sqLiteDatabase.execSQL(expensesSql);
+        String sql = "CREATE TABLE "+databasenames.Expense.table_name+" ( "+
+                databasenames.Expense.col_id+" INTEGER PRIMARY KEY AUTOINCREMENT,"+databasenames.Expense.col_time+" TEXT , " + databasenames.Expense.col_discription +" TEXT ,"+
+                databasenames.Expense.col_date + " TEXT )";
+
+        sqLiteDatabase.execSQL(sql);
     }
 
     @Override

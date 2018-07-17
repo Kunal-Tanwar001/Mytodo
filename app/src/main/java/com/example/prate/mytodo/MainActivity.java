@@ -121,7 +121,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         }
         if(requestCode==3 && resultCode==4){
-        long id=data.getLongExtra("ff",0);
+        Bundle b=data.getExtras();
+        Long id=b.getLong("ff");
             Expensedatabase openHelper = Expensedatabase.getInstance(this);
             SQLiteDatabase db = openHelper.getWritableDatabase();
             String[] colum = {id + ""};
