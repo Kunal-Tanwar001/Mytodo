@@ -1,18 +1,24 @@
 package com.example.prate.mytodo;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.Calendar;
 
 import static android.content.Intent.ACTION_SEND;
@@ -26,8 +32,10 @@ int  minute=cal.get(Calendar.MINUTE);
 int hour=cal.get(Calendar.HOUR);
 String date=toString().valueOf(day)+"/"+toString().valueOf(month)+"/"+toString().valueOf(year);
 String time=toString().valueOf(hour)+":"+toString().valueOf(minute);
-EditText tittle,discription,timeshow,dateshow;
+EditText tittle,discription;
+TextView timeshow,dateshow;
 Button add;
+Long id;
 
 
     @Override
@@ -53,6 +61,15 @@ Button add;
                add(day,month,year);
            }
        });
+
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        if(action == ACTION_SEND){
+            String text = intent.getStringExtra(Intent.EXTRA_TEXT);
+            discription.setText(text);
+            tittle.setText("Copied");
+//            finish = true;
+        }
 
 
     }
@@ -84,15 +101,51 @@ Button add;
          String t=timeshow.getText().toString();
          String da=dateshow.getText().toString();
 
+
+        Expensedatabase datas=Expensedatabase.getInstance(this);
+        SQLiteDatabase db=datas.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(databasenames.Expense.col_titlle,s);
+        contentValues.put(databasenames.Expense.col_date,da);
+        contentValues.put(databasenames.Expense.col_time,t);
+        contentValues.put(databasenames.Expense.col_discription,d);
+        long id=  db.insert(databasenames.Expense.table_name,null,contentValues);
+
+
         Bundle b=new Bundle();
         b.putString("tittle",s);
         b.putString("discription",d);
         b.putString("time",t);
         b.putString("date",da);
+        b.putLong("id",id);
         Intent intent=new Intent();
         intent.putExtras(b);
+
+
+
+        Toast.makeText(this, "ToDo Created", Toast.LENGTH_SHORT).show();
+
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent1 = new Intent(this,MyReciever2.class);
+        intent1.putExtra("ID1",id);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,1,intent1,0);
+        Log.i("Alarm", String.valueOf(cal.getTimeInMillis()));
+        alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
+
+        long currentTime = System.currentTimeMillis();
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,currentTime + 5000,10000,pendingIntent);
+
+
+//        Intent intent = new Intent();
+//        intent.putExtra("Title",title);
+//        intent.putExtra("Desc",desc);
+//        intent.putExtra("Date",date);
+//        intent.putExtra("Time",time);
+//        intent.putExtra("DTCreated",dtCrerated);
         setResult(1,intent);
+//        if(!finish) {
         finish();
+//        }
 
     }
 }

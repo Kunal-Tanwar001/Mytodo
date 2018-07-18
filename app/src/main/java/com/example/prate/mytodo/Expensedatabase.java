@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import static org.xmlpull.v1.XmlPullParser.TEXT;
+
 public class Expensedatabase extends SQLiteOpenHelper {
     public final static String database_name="name";
     public static final int version=1;
@@ -29,7 +31,7 @@ return datanew;
 //                databasenames.Expense.col_date + " TEXT );";
 
         String sql = "CREATE TABLE "+databasenames.Expense.table_name+" ( "+
-                databasenames.Expense.col_id+" INTEGER PRIMARY KEY AUTOINCREMENT,"+databasenames.Expense.col_time+" TEXT , " + databasenames.Expense.col_discription +" TEXT ,"+
+                databasenames.Expense.col_id+" INTEGER PRIMARY KEY AUTOINCREMENT,"+databasenames.Expense.col_time+" TEXT ,"+  databasenames.Expense.col_titlle  + "  TEXT ," + databasenames.Expense.col_discription +" TEXT ,"+
                 databasenames.Expense.col_date + " TEXT )";
 
         sqLiteDatabase.execSQL(sql);

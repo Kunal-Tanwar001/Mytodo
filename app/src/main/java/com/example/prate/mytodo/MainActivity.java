@@ -103,15 +103,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         String d=b.getString("discription");
         String da=b.getString("date");
         String t=b.getString("time");
-        Expensedatabase datas=Expensedatabase.getInstance(this);
-      SQLiteDatabase db=datas.getWritableDatabase();
-            ContentValues contentValues=new ContentValues();
-            contentValues.put(databasenames.Expense.col_titlle,ti);
-            contentValues.put(databasenames.Expense.col_date,da);
-            contentValues.put(databasenames.Expense.col_time,t);
-            contentValues.put(databasenames.Expense.col_discription,d);
-          long id=  db.insert(databasenames.Expense.table_name,null,contentValues);
-
+       Long id=b.getLong("id");
        Expense ex=new Expense(ti,d,t,da);
        ex.setId(id);
        item.add(ex);
@@ -128,15 +120,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             String[] colum = {id + ""};
             Cursor cursor = db.query(databasenames.Expense.table_name, null, databasenames.Expense.col_id + " = ?", colum, null, null, null);
 
-            cursor.moveToNext();
-            String tiitl = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_titlle));
-            String discriptio = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_discription));
-            String tim = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_time));
-            String dat = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_date));
-            Expense ex=new Expense(tiitl,discriptio,tim,dat);
-            ex.setId(id);
-            item.set(post,ex);
-            ad.notifyDataSetChanged();
+          while(cursor.moveToNext()) {
+              String tiitl = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_titlle));
+              String discriptio = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_discription));
+              String tim = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_time));
+              String dat = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_date));
+              Expense ex = new Expense(tiitl, discriptio, tim, dat);
+              ex.setId(id);
+              item.set(post, ex);
+              ad.notifyDataSetChanged();
+          }
+          cursor.close();
         }
     }
 

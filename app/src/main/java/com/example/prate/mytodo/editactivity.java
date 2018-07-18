@@ -14,16 +14,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
 
 public class editactivity extends AppCompatActivity {
-EditText tittle,discription,time,date;
+EditText tittle,discription;
+TextView time,date;
 Button save;
     Calendar newCalendar = Calendar.getInstance();
     int month = newCalendar.get(Calendar.MONTH);
@@ -32,6 +35,7 @@ Button save;
     int hour = newCalendar.get(Calendar.HOUR_OF_DAY);
     int min = newCalendar.get(Calendar.MINUTE);
 long id;
+String tiitl,discriptio,tim,dat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +45,7 @@ long id;
         time = findViewById(R.id.time);
         date = findViewById(R.id.date);
          save=findViewById(R.id.button);
-
+      Log.d("editactivity","nhi chala");
       Intent intent = getIntent();
         id= intent.getLongExtra("IDMERI", 0);
         Expensedatabase openHelper = Expensedatabase.getInstance(this);
@@ -49,11 +53,12 @@ long id;
         String[] colum = {id + ""};
         Cursor cursor = db.query(databasenames.Expense.table_name, null, databasenames.Expense.col_id + " = ?", colum, null, null, null);
 
-        cursor.moveToNext();
-        String tiitl = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_titlle));
-        String discriptio = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_discription));
-        String tim = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_time));
-        String dat = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_date));
+        while(cursor.moveToNext()) {
+             tiitl = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_titlle));
+             discriptio = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_discription));
+             tim = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_time));
+             dat = cursor.getString(cursor.getColumnIndex(databasenames.Expense.col_date));
+        }
        cursor.close();
         tittle.setText(tiitl);
         discription.setText(discriptio);
@@ -111,11 +116,11 @@ long id;
             contentValues.put(databasenames.Expense.col_time,t);
             contentValues.put(databasenames.Expense.col_date,da);
             String[] colum = {id + ""};
-            long id1=db.update(databasenames.Expense.table_name,contentValues,databasenames.Expense.col_id+" = ?",colum);
+            db.update(databasenames.Expense.table_name,contentValues,databasenames.Expense.col_id+" = ?",colum);
 
              Intent intent=new Intent();
              Bundle b=new Bundle();
-           b.putLong("ff",id1);
+           b.putLong("ff",id);
            intent.putExtras(b);
             setResult(4,intent);
             finish();
